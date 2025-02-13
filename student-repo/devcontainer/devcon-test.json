@@ -10,7 +10,8 @@
     },
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "postCreateCommand": "bash .devcontainer/setup.sh; echo 'Welcome to your CSOS & VSCode Game Dev 2 Codespace!'","customizations": {
+  "postCreateCommand": "bash /workspaces/template-repo/student-repo/devcontainer/setup.sh; echo 'Welcome to your CSOS & VSCode Game Dev 2 Codespace!'",
+  "customizations": {
     "vscode": {
       "extensions": [
         "ms-python.python",
