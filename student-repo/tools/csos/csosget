@@ -9,37 +9,19 @@ import time
 from rich.progress import Progress
 from rich import print as rprint
 
-
-# FLOW:
-# CLI opens browser for GitHub auth
-# User logs in with GitHub
-# Server gets token and stores in Redis
-# CLI polls /get-token endpoint until token is available
-# CLI saves token to local config file
-
 console = Console()
 
-CONFIG_DIR = Path(os.environ.get('workspace', Path.home())) / '.config' / 'csos'
-CONFIG_FILE = CONFIG_DIR / 'config.json'
+# Absolute paths for GitHub Codespaces
+WORKSPACE_ROOT = "/workspaces/template-repo"
+STUDENT_REPO = f"{WORKSPACE_ROOT}/student-repo"
+CONFIG_DIR = Path("/home/vscode/.config/csos")
+CONFIG_FILE = CONFIG_DIR / "config.json"
 SERVER_URL = "https://csos-example-server.onrender.com"
-
-
-
-
-
-
 
 def load_config():
     if CONFIG_FILE.exists():
         return json.loads(CONFIG_FILE.read_text())
     return {}
-
-
-
-
-
-
-
 
 def save_config(config):
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
@@ -49,14 +31,6 @@ def save_config(config):
 def cli():
     """CSOS Lesson Management Tool"""
     pass
-
-
-
-
-
-
-
-
 
 
 @cli.command()
@@ -71,13 +45,6 @@ def init():
     }
     save_config(config)
     rprint("[green]✓[/green] Initialized csostool configuration")
-
-
-
-
-
-
-
 
 
 @cli.command()
@@ -108,13 +75,6 @@ def auth():
         rprint("[red]×[/red] Authentication timed out. Please try again.")
 
 
-
-
-
-
-
-
-
 @cli.command()
 def list():
     """List available lessons"""
@@ -136,18 +96,17 @@ def list():
 
 
 
-
 @cli.command()
 @click.argument('lesson_name')
 def get(lesson_name):
     """Download a specific lesson to src/ directory"""
     config = load_config()
     if not config.get("token"):
-        rprint("[red]×[/red] Please authenticate first: csostool auth")
+        rprint("[red]×[/red] Please authenticate first: csosget auth")
         return
     
-    # Ensure src directory exists
-    src_dir="/workspaces/template-repo/student-repo/src"
+    # Use absolute path for src directory
+    src_dir = f"{STUDENT_REPO}/src"
     os.makedirs(src_dir, exist_ok=True)
     
     headers = {"Authorization": f"Bearer {config['token']}"}
@@ -167,10 +126,10 @@ def get(lesson_name):
                         f.write(chunk)
                         progress.update(task, advance=len(chunk))
             
-            # Extract the zip file to src directory
+            # Extract the zip file to src directory using absolute path
             import zipfile
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                zip_ref.extractall('src')
+                zip_ref.extractall(src_dir)
             
             # Remove the zip file after extraction
             os.remove(zip_path)
@@ -178,7 +137,6 @@ def get(lesson_name):
             rprint(f"[green]✓[/green] Downloaded and extracted {lesson_name} to {src_dir}/")
         else:
             rprint(f"[red]×[/red] Failed to download lesson: {response.status_code}")
-
 
 if __name__ == '__main__':
     cli()

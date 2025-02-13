@@ -9,11 +9,10 @@ mkdir -p ~/.config/csos
 # Install csostool in the GitHub Codespaces workspace directory
 echo "📦 Installing csostool..."
 if [ -f "/workspaces/template-repo/student-repo/tools/csos/csosget" ]; then
-    chmod +x /workspaces/template-repo/student-repo/tools/csos/csosget
+    chmod -v +x /workspaces/template-repo/student-repo/tools/csos/csosget
 else
     echo "❌ csosget not found!"
 fi
-chmod +x /workspaces/template-repo/student-repo/tools/csos/csosget
 
 # Ensure csosget is in PATH without requiring a symlink
 echo 'export PATH="/workspaces/template-repo/student-repo/tools/csos:$PATH"' >> ~/.bashrc
