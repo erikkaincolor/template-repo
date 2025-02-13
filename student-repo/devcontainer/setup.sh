@@ -1,19 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env python3
 set -e
 
 echo "🚀 Setting up CSOS Development Environment..."
 
 # Create necessary directories
-mkdir -p ~/.local/bin
 mkdir -p ~/.config/csos
 
-# Install csosget tool
+# Install csosget tool in the GitHub Codespaces workspace directory
 echo "📦 Installing csosget tool..."
-curl -fsSL https://codestreamonlinestudios.com/csos-remote -o ~/.local/bin/csosget
-chmod +x ~/.local/bin/csosget
+curl -fsSL https://codestreamonlinestudios.com/csos-remote -o /workspaces/template-repo/student-repo/tools/csosget/csosget
+chmod +x /workspaces/template-repo/student-repo/tools/csosget/csosget
 
-# Add to PATH if not already there
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+# Add csosget tool to the PATH in the Codespace container
+echo 'export PATH="/workspaces/template-repo/student-repo/tools/csosget:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 
 # Install Python dependencies
 echo "📚 Installing Python dependencies..."
