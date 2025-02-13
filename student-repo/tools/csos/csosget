@@ -19,7 +19,7 @@ from rich import print as rprint
 
 console = Console()
 
-CONFIG_DIR = Path.home() / '.config' / 'csos'
+CONFIG_DIR = Path(os.environ.get('workspace', Path.home())) / '.config' / 'csos'
 CONFIG_FILE = CONFIG_DIR / 'config.json'
 SERVER_URL = "https://csos-example-server.onrender.com"
 
@@ -61,7 +61,7 @@ def cli():
 
 @cli.command()
 def init():
-    """Initialize csosget configuration"""
+    """Initialize csostool configuration"""
     if not CONFIG_DIR.exists():
         CONFIG_DIR.mkdir(parents=True)
     
@@ -70,7 +70,7 @@ def init():
         "initialized": True
     }
     save_config(config)
-    rprint("[green]✓[/green] Initialized csosget configuration")
+    rprint("[green]✓[/green] Initialized csostool configuration")
 
 
 
@@ -94,6 +94,7 @@ def auth():
         for _ in range(max_attempts):
             try:
                 response = requests.get(f"{SERVER_URL}/get-token")
+                print("TEST", response)
                 if response.status_code == 200:
                     token = response.json()["access_token"]
                     config["token"] = token
@@ -119,7 +120,7 @@ def list():
     """List available lessons"""
     config = load_config()
     if not config.get("token"):
-        rprint("[red]×[/red] Please authenticate first: csosget auth")
+        rprint("[red]×[/red] Please authenticate first: csostool auth")
         return
     
     headers = {"Authorization": f"Bearer {config['token']}"}
@@ -142,7 +143,7 @@ def get(lesson_name):
     """Download a specific lesson to src/ directory"""
     config = load_config()
     if not config.get("token"):
-        rprint("[red]×[/red] Please authenticate first: csosget auth")
+        rprint("[red]×[/red] Please authenticate first: csostool auth")
         return
     
     # Ensure src directory exists

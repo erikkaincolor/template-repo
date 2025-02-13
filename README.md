@@ -1,8 +1,8 @@
 Hey students!
 This is how you'll navigate VSCode and get your CodeStream assignments. In the terminal below, use this command:
 
-`csosget [lesson name]` 
-ex: csosget gd2 lesson1.2
+`csostool get [lesson name]` 
+ex: csostool get gd2_lesson1.2
 
 and then the file will be downloaded to your github repo in the 'student-start-repo' home directory(aka folder)
 

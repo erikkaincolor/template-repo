@@ -6,26 +6,21 @@ echo "🚀 Setting up CSOS Development Environment..."
 # Create necessary directories
 mkdir -p ~/.config/csos
 
-# Install csosget tool in the GitHub Codespaces workspace directory
-echo "📦 Installing csosget tool..."
-chmod +x /workspaces/template-repo/student-repo/tools/csosget/csosget
+# Install csostool in the GitHub Codespaces workspace directory
+echo "📦 Installing csostool..."
+chmod +x /workspaces/template-repo/student-repo/tools/csos/csosget
 
-# Create a symlink for csosget command in the PATH
-echo "📂 Creating symlink for csosget command..."
-ln -s /workspaces/template-repo/student-repo/tools/csosget/csosget /usr/local/bin/csosget
+# Ensure csosget is in PATH without requiring a symlink
+echo 'export PATH="/workspaces/template-repo/student-repo/tools/csos:$PATH"' >> ~/.bashrc
+echo 'export PATH="/workspaces/template-repo/student-repo/tools/csos:$PATH"' >> ~/.bash_profile
 
-# Add /usr/local/bin to PATH in the Codespace container
-echo 'export PATH="/workspaces/template-repo/student-repo/tools:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-
-
-
-
-
+# Apply changes immediately for the current session
+export PATH="/workspaces/template-repo/student-repo/tools/csos:$PATH"
+source ~/.bashrc || source ~/.bash_profile
 
 # Install Python dependencies
 echo "📚 Installing Python dependencies..."
-python -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 
 # Configure git
