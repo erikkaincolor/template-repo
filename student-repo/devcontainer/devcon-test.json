@@ -1,0 +1,61 @@
+{
+  "name": "CSOS Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh; echo 'Welcome to your CSOS & VSCode Game Dev 2 Codespace!'","customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "github.copilot",
+        "ms-vscode.live-server",
+        "ritwickdey.liveserver",
+        "ms-vsliveshare.vsliveshare"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.fontSize": 16,
+        "editor.tabSize": 2,
+        "editor.fontFamily": "Fira Code",
+        "editor.rulers": [
+          80,
+          100
+        ],
+        "editor.bracketPairColorization.enabled": true,
+        "terminal.integrated.fontSize": 14,
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "workbench.colorTheme": "GitHub Dark Default",
+        "workbench.layoutControl.enabled": true,
+        "window.menuBarVisibility": "compact",
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.formatting.provider": "black"
+      }
+    }
+  },
+  "forwardPorts": [
+    5000,
+    8000
+  ],
+  "portsAttributes": {
+    "5000": {
+      "label": "Flask Server",
+      "onAutoForward": "notify"
+    },
+    "8000": {
+      "label": "Live Server",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteUser": "vscode"
+}
