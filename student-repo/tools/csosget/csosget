@@ -5,6 +5,7 @@ import requests
 from pathlib import Path
 import json
 from rich.console import Console
+import time
 from rich.progress import Progress
 from rich import print as rprint
 

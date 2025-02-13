@@ -8,12 +8,20 @@ mkdir -p ~/.config/csos
 
 # Install csosget tool in the GitHub Codespaces workspace directory
 echo "📦 Installing csosget tool..."
-curl -fsSL https://codestreamonlinestudios.com/csos-remote -o /workspaces/template-repo/student-repo/tools/csosget/csosget
 chmod +x /workspaces/template-repo/student-repo/tools/csosget/csosget
 
-# Add csosget tool to the PATH in the Codespace container
-echo 'export PATH="/workspaces/template-repo/student-repo/tools/csosget:$PATH"' >> ~/.bashrc
+# Create a symlink for csosget command in the PATH
+echo "📂 Creating symlink for csosget command..."
+ln -s /workspaces/template-repo/student-repo/tools/csosget/csosget /usr/local/bin/csosget
+
+# Add /usr/local/bin to PATH in the Codespace container
+echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
+
+
+
+
+
 
 # Install Python dependencies
 echo "📚 Installing Python dependencies..."
