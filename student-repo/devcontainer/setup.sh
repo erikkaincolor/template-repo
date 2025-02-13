@@ -15,7 +15,7 @@ echo "📂 Creating symlink for csosget command..."
 ln -s /workspaces/template-repo/student-repo/tools/csosget/csosget /usr/local/bin/csosget
 
 # Add /usr/local/bin to PATH in the Codespace container
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/workspaces/template-repo/student-repo/tools:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 
 

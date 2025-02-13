@@ -146,7 +146,8 @@ def get(lesson_name):
         return
     
     # Ensure src directory exists
-    os.makedirs('src', exist_ok=True)
+    src_dir="/workspaces/template-repo/student-repo/src"
+    os.makedirs(src_dir, exist_ok=True)
     
     headers = {"Authorization": f"Bearer {config['token']}"}
     download_url = f"{SERVER_URL}/lessons/{lesson_name}"
@@ -156,7 +157,7 @@ def get(lesson_name):
         
         if response.status_code == 200:
             total_size = int(response.headers.get('content-length', 0))
-            zip_path = os.path.join('src', f"{lesson_name}.zip")
+            zip_path = os.path.join(src_dir, f"{lesson_name}.zip")
             
             with open(zip_path, 'wb') as f:
                 with Progress() as progress:
@@ -173,7 +174,7 @@ def get(lesson_name):
             # Remove the zip file after extraction
             os.remove(zip_path)
             
-            rprint(f"[green]✓[/green] Downloaded and extracted {lesson_name} to src/")
+            rprint(f"[green]✓[/green] Downloaded and extracted {lesson_name} to {src_dir}/")
         else:
             rprint(f"[red]×[/red] Failed to download lesson: {response.status_code}")
 
