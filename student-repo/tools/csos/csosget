@@ -35,7 +35,7 @@ def cli():
 
 @cli.command()
 def init():
-    """Initialize csostool configuration"""
+    """Initialize csosget configuration"""
     if not CONFIG_DIR.exists():
         CONFIG_DIR.mkdir(parents=True)
     
@@ -44,7 +44,7 @@ def init():
         "initialized": True
     }
     save_config(config)
-    rprint("[green]✓[/green] Initialized csostool configuration")
+    rprint("[green]✓[/green] Initialized csosget configuration")
 
 
 @cli.command()
@@ -80,7 +80,7 @@ def list():
     """List available lessons"""
     config = load_config()
     if not config.get("token"):
-        rprint("[red]×[/red] Please authenticate first: csostool auth")
+        rprint("[red]×[/red] Please authenticate first: csosget auth")
         return
     
     headers = {"Authorization": f"Bearer {config['token']}"}
@@ -93,7 +93,6 @@ def list():
             console.print(f"  • {lesson['name']} - {lesson['description']}")
     else:
         rprint("[red]×[/red] Failed to fetch lessons")
-
 
 
 @cli.command()

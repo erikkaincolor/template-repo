@@ -10,8 +10,9 @@
     },
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-"postCreateCommand": "chmod +x .devcontainer/setup.sh && .devcontainer/setup.sh",
-"postStartCommand": "chmod +x /workspaces/template-repo/student-repo/tools/csos/csosget && /workspaces/template-repo/student-repo/tools/csos/csosget",
+"postCreateCommand": "echo 'Running postCreateCommand' && ls -la /workspaces/template-repo/student-repo/devcontainer && cat /workspaces/template-repo/student-repo/devcontainer/setup.sh && bash /workspaces/template-repo/student-repo/devcontainer/setup.sh",
+"postStartCommand": "echo 'Running postStartCommand' && ls -la /workspaces/template-repo/student-repo/tools/csos && chmod +x /workspaces/template-repo/student-repo/tools/csos/csosget && /workspaces/template-repo/student-repo/tools/csos/csosget --version"
+,
   "customizations": {
     "vscode": {
       "extensions": [
