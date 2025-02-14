@@ -10,7 +10,8 @@
     },
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "postCreateCommand": "bash /workspaces/template-repo/student-repo/devcontainer/setup.sh; echo 'Welcome to your CSOS & VSCode Game Dev 2 Codespace!'",
+"postCreateCommand": "chmod +x .devcontainer/setup.sh && .devcontainer/setup.sh",
+"postStartCommand": "chmod +x /workspaces/template-repo/student-repo/tools/csos/csosget && /workspaces/template-repo/student-repo/tools/csos/csosget",
   "customizations": {
     "vscode": {
       "extensions": [
