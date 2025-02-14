@@ -52,6 +52,7 @@ def auth():
     """Authenticate with GitHub"""
     config = load_config()
     auth_url = f"{SERVER_URL}/auth/github/login"
+
     rprint(f"[yellow]![/yellow] Opening browser for GitHub authentication...")
     click.launch(auth_url)
     
@@ -68,8 +69,14 @@ def auth():
                     save_config(config)
                     rprint("[green]✓[/green] Authentication successful!")
                     return
-            except:
-                pass
+                elif response.status_code == 404:
+                     pass # Token not yet available, keep polling
+                else:
+                    rprint(f"[red]×[/red] Authentication failed: {response.status_code} - {response.text}")
+                    return
+            except requests.exceptions.RequestException as e:
+                print(f"Error during request: {e}")
+                pass  # Network error, keep polling
             time.sleep(1)
             
         rprint("[red]×[/red] Authentication timed out. Please try again.")
